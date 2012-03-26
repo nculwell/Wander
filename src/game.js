@@ -12,6 +12,8 @@
   var imgFloor;
   var imgWall;
 
+  var pos = { x: 1, y: 1 };
+
   var map = [
     [ 1, 1, 1, 1, 1, 1, 1, 1 ],
     [ 1, 0, 0, 0, 0, 0, 0, 1 ],
@@ -27,7 +29,7 @@
     "floor", "wall", "rubble"
   ];
 
-  function drawMap() {
+  var drawMap = function() {
     var tbl = document.getElementById("mapTbl");
     $(tbl).empty();
     for (var r = 0; r < map.length; r++) {
@@ -45,7 +47,7 @@
         $(img).css(cssClass);
         td.appendChild(img);
 
-        if (r==1 && c==1) {
+        if (r == pos.y && c == pos.x) {
           $(img).attr("src", "tiles/man_sword_shield.png");
         } else {
           $(img).attr("src", "tiles/blank.png");
@@ -54,11 +56,24 @@
     }
   }
 
+  var move = function(dir) {
+    var moveTo = { x: pos.x + dir.x, y: pos.y + dir.y };
+    var bgIndex = map[moveTo.y][moveTo.x];
+    if (bgIndex == 0) {
+      pos = moveTo;
+      drawMap();
+    }
+  }
+
   //$(document).ready(function() {
   $(window).load(function() {
     window.scrollTo(0, 1);
     drawMap();
     $(window).bind("resize", drawMap).bind("reorient", drawMap);
+    $("#arrowUp").click(function() { move({ x: 0, y: -1 }) });
+    $("#arrowDn").click(function() { move({ x: 0, y: +1 }) });
+    $("#arrowLt").click(function() { move({ x: -1, y: 0 }) });
+    $("#arrowRt").click(function() { move({ x: +1, y: 0 }) });
   });
 })();
 
