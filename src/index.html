@@ -15,8 +15,10 @@
     <script src="jquery-1.7.js" type="text/javascript"></script>
     <script src="game.js" type="text/javascript"></script>
     <style type="text/css">
-      html, body, canvas.theCanvas {
+      div, table, tr, td, span {
         margin: 0px;
+        padding: 0px;
+        border: none;
       }
       html, body {
         width:  100%;
@@ -24,17 +26,116 @@
       }
       body {
         background: black;
+        font-size: 0px;
+      }
+      html, body, canvas.theCanvas {
+        margin: 0px;
+      }
+      img {
+        margin: 0px;
       }
       canvas.theCanvas {
       }
-      img.sprite {
+      div.sprites {
         display: none;
+      }
+      table.tiles {
+        padding: 0px;
+        margin: 0px;
+        border-collapse: collapse;
+
+        border: 8px gray ridge;
+      }
+      table.tiles td {
+        padding: 0px;
+      }
+      table.tiles img.terImg {
+        position: relative;
+        display: block;
+        float: left;
+      }
+      table.tiles .charImg {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+      }
+      canvas {
+        display: none;
+      }
+      td#consoleCell {
+        width: 75%;
+      }
+      td#buttonCell {
+        width: 25%;
+        background: #333;
+      }
+      #buttonCell img {
+        padding: 2px;
+        border: 8px red ridge;
+      }
+      #console {
+        font-size: 10pt;
+        height: 5em;
+        width: 50em;
+        border: 2px red solid;
+        background: blue;
+        color: white;
+        overflow: scroll;
+        word-wrap: break-word;
+      }
+
+      /* FIXME: These need some work. */
+      .canSelect {
+        -webkit-touch-callout: text;
+        -webkit-user-select: text;
+        -khtml-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
+      }
+      .noSelect {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        user-select: -moz-none;
       }
     </style>
   </head>
-  <body><canvas id="theCanvas">
-      Canvas not supported.</canvas
-    ><img id="theImg" class="sprite" src="a.png"></body>
-  <!-- <audio src="http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg" autoplay>
-  </audio> -->
+  <body class="noSelect">
+      <table id="mapTbl" class="tiles noselect">
+        <tr>
+          <td><img src="tiles/rubble.png"></td>
+          <td><img src="tiles/rubble.png"></td>
+          <td><img src="tiles/rubble.png"></td>
+        </tr>
+        <tr>
+          <td><img src="tiles/rubble.png"></td>
+          <td><img src="tiles/rubble.png"></td>
+          <td><img src="tiles/rubble.png"></td>
+        </tr>
+        <tr>
+          <td><img src="tiles/rubble.png"></td>
+          <td><img src="tiles/rubble.png"></td>
+          <td><img src="tiles/rubble.png"></td>
+        </tr>
+      </table>
+    </div>
+    <div id="buttonCell">
+      <table>
+        <tr>
+          <td></td>
+          <td><img src="controls/UpArrow.png" /></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><img src="controls/LeftArrow.png" /></td>
+          <td><img src="controls/DownArrow.png" /></td>
+          <td><img src="controls/RightArrow.png" /></td>
+        </tr>
+      </table>
+    </div>
+  </body>
 </html>

@@ -2,38 +2,63 @@
 
 (function() {
 
-  var canvas;
+  var cvsMapDisplay, ctxMapDisplay;
+  var cvsMapCell, ctxMapCell, imgMapCell;
+
+  var tileSize = 50;
+
   var images;
 
-  function resetCanvas() {
-    var canvas = document.getElementById("theCanvas");
-    canvas.width = window.innerWidth - 10;
-    canvas.height = window.innerHeight - 10;
-    var context = canvas.getContext("2d");
+  var imgFloor;
+  var imgWall;
 
-    // now draw the line
-    // drawLine(context);
+  var map = [
+    [ 1, 1, 1, 1, 1, 1, 1, 1 ],
+    [ 1, 0, 0, 0, 0, 0, 0, 1 ],
+    [ 1, 0, 1, 2, 2, 1, 0, 1 ],
+    [ 1, 0, 1, 2, 2, 1, 0, 1 ],
+    [ 1, 0, 1, 2, 2, 1, 0, 1 ],
+    [ 1, 0, 1, 2, 2, 1, 0, 1 ],
+    [ 1, 0, 0, 0, 0, 0, 0, 1 ],
+    [ 1, 1, 1, 1, 1, 1, 1, 1 ],
+  ];
 
-    var a = document.getElementById("theImg");
-    blit(context, a, {x: 1, y: 1});
-  }
+  var bgImgSrc = [
+    "floor", "wall", "rubble"
+  ];
 
-  function blit(context, img, xy) {
-    context.drawImage(img, xy.x, xy.y);
-  }
+  function drawMap() {
+    var tbl = document.getElementById("mapTbl");
+    $(tbl).empty();
+    for (var r = 0; r < map.length; r++) {
+      var tr = document.createElement("tr");
+      tbl.appendChild(tr);
+      for (var c = 0; c < map[0].length; c++) {
+        var td = document.createElement("td");
+        tr.appendChild(td);
 
-  function drawLine(context) {
-    context.beginPath();
-    context.moveTo(0, 0);
-    context.lineTo(canvas.width, canvas.height);
-    context.stroke();
+        var bgIndex = map[r][c];
+        var bgImg = "tiles/" + bgImgSrc[bgIndex] + ".png";
+        var cssClass = { "background-image": "url(" + bgImg + ")" };
+
+        var img = document.createElement("img");
+        $(img).css(cssClass);
+        td.appendChild(img);
+
+        if (r==1 && c==1) {
+          $(img).attr("src", "tiles/man_sword_shield.png");
+        } else {
+          $(img).attr("src", "tiles/blank.png");
+        }
+      }
+    }
   }
 
   //$(document).ready(function() {
   $(window).load(function() {
     window.scrollTo(0, 1);
-    resetCanvas();
-    $(window).bind("resize", resetCanvas).bind("reorient", resetCanvas);
+    drawMap();
+    $(window).bind("resize", drawMap).bind("reorient", drawMap);
   });
 })();
 
